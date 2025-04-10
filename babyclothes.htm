@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Clothing Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+ <nav class="navbar">
+<div class="bottom-left-cart" onclick="toggleCart()">
+    Cart <span id="cart-count">0</span>
+</div>
+<div class="logo">
+        <img src="children-clothing-kids-store-baby-clothes-garment-shop-circle-emblem-logo-design-illustration-vector.jpg" alt="KidsClothing Logo">
+    </div>
+</nav>
+
+    </header>
+<section class="welcome-section" style="
+    text-align: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #ffe5ec, #e0f7fa);
+    font-family: 'Fredoka', sans-serif;
+    border-bottom: 4px dotted #ffd1dc;
+    position: relative;
+">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">👶🎀🧸</div>
+    <h1 style="font-size: 2.8rem; color: #ff6f91; margin: 0;">
+        Welcome to Kids Baby Store
+    </h1>
+    <p style="font-size: 1.2rem; color: #444; margin-top: 0.5rem;">
+        Your <strong>online-only</strong> destination for adorable styles!
+    </p>
+</section>
+
+    <div id="sticky-cart" onclick="toggleCart()">
+        🛒 <span id="sticky-count">0</span> | R <span id="sticky-total">0.00</span>
+    </div>
+
+    <div class="floating-icons"></div>
+
+    <main id="product-container">
+        <div class="product" data-id="1" data-name="Rainbow Dress" data-price="249.99">
+            <div class="product-images">
+                <img src="RainbowDress.PNG" alt="Rainbow Dress">
+            </div>
+            <div class="product-details">
+                <h1>Rainbow Dress</h1>
+                <p class="price">R249.99</p>
+                <p class="description">A fun and colorful rainbow dress perfect for any occasion.</p>
+                <label>Size:
+                    <select class="size-select">
+                        <option value="2-3">2-3</option>
+                        <option value="4-5">4-5</option>
+                        <option value="6-7">6-7</option>
+                    </select>
+                </label>
+                <button onclick="addToCart(1)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product" data-id="2" data-name="Dino Hoodie" data-price="299.99">
+            <div class="product-images">
+                <img src="Dino.PNG" alt="Dino Hoodie">
+            </div>
+            <div class="product-details">
+                <h1>Dino Hoodie</h1>
+                <p class="price">R299.99</p>
+                <p class="description">Stay cozy with this roar-some dino hoodie.</p>
+                <label>Size:
+                    <select class="size-select">
+                        <option value="2-3">2-3</option>
+                        <option value="4-5">4-5</option>
+                        <option value="6-7">6-7</option>
+                    </select>
+                </label>
+                <button onclick="addToCart(2)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product" data-id="3" data-name="Unicorn Pajamas" data-price="199.99">
+            <div class="product-images">
+                <img src="Unicorn.PNG" alt="Unicorn Pajamas">
+            </div>
+            <div class="product-details">
+                <h1>Unicorn Pajamas</h1>
+                <p class="price">R199.99</p>
+                <p class="description">Dream big in magical unicorn pajamas.</p>
+                <label>Size:
+                    <select class="size-select">
+                        <option value="2-3">2-3</option>
+                        <option value="4-5">4-5</option>
+                        <option value="6-7">6-7</option>
+                    </select>
+                </label>
+                <button onclick="addToCart(3)">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+<div class="cart-footer">
+    <strong>Total: R<span id="cart-total">0.00</span></strong>
+    <br>
+    <button onclick="checkout()" class="checkout-btn">Checkout</button>
+    <button onclick="clearCart()">Clear</button>
+</div>
+
+    </div>
+
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function addToCart(id) {
+            const productEl = document.querySelector(`.product[data-id='${id}']`);
+            const name = productEl.getAttribute('data-name');
+            const price = parseFloat(productEl.getAttribute('data-price'));
+            const size = productEl.querySelector('.size-select')?.value || 'N/A';
+
+            const existing = cart.find(item => item.id === id && item.size === size);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ id, name, price, size, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        function decreaseQty(id, size) {
+            const item = cart.find(item => item.id === id && item.size === size);
+            if (item) {
+                item.qty--;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => !(i.id === id && i.size === size));
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(id, size) {
+            cart = cart.filter(item => !(item.id === id && item.size === size));
+            updateCartUI();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsEl = document.getElementById('cart-items');
+            const cartCountEl = document.getElementById('cart-count');
+            const stickyCountEl = document.getElementById('sticky-count');
+            const stickyTotalEl = document.getElementById('sticky-total');
+            const cartTotalEl = document.getElementById('cart-total');
+
+            cartItemsEl.innerHTML = '';
+            let total = 0, itemCount = 0;
+
+            cart.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <strong>${item.name}</strong><br>
+                    Size: ${item.size}<br>
+                    Qty: ${item.qty} × R${item.price.toFixed(2)}
+                    <div style="margin-top:5px;">
+                        <button onclick="addToCart(${item.id})">+</button>
+                        <button onclick="decreaseQty(${item.id}, '${item.size}')">-</button>
+                        <button onclick="removeFromCart(${item.id}, '${item.size}')">Remove</button>
+                    </div>
+                `;
+                cartItemsEl.appendChild(itemEl);
+                total += item.price * item.qty;
+                itemCount += item.qty;
+            });
+
+            cartCountEl.textContent = itemCount;
+            stickyCountEl.textContent = itemCount;
+            stickyTotalEl.textContent = total.toFixed(2);
+            cartTotalEl.textContent = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>

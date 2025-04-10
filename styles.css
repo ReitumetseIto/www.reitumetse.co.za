@@ -1,0 +1,264 @@
+/* Reset and basic styles */
+body {
+    font-family: 'Fredoka One', cursive;
+    margin: 0;
+    padding: 0;
+    background-color: #fff8f0;
+    background-image: url('children-clothing-kids-store-baby-clothes-garment-shop-circle-emblem-logo-design-illustration-vector.jpg');
+    background-repeat: repeat;
+    background-size: 200px;
+    background-blend-mode: lighten;
+}
+
+/* Import playful Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+/* ---------- HEADER STYLES ---------- */
+.site-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+    position: relative;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.account-cart {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.account-cart a {
+    text-decoration: none;
+    color: #ff6f91;
+    font-weight: 500;
+}
+
+.account-cart a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- PRODUCT SECTION ---------- */
+.product {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1000px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 5;
+}
+
+.product-images {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-images img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-images img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-details {
+    flex: 1;
+    min-width: 300px;
+}
+
+.product-details h1 {
+    margin-top: 0;
+    font-family: 'Fredoka One', cursive;
+    color: #f06292;
+}
+
+.price {
+    font-size: 20px;
+    color: #444;
+    margin: 10px 0;
+}
+
+.description {
+    font-size: 14px;
+    color: #555;
+}
+
+.size-selection {
+    margin: 15px 0;
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+    padding: 10px 16px;
+    border: none;
+    background-color: #ffb6b9;
+    color: white;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #ff6f91;
+    transform: translateY(-2px);
+}
+
+/* ---------- CART MODAL ---------- */
+.cart-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-left: 2px solid #ccc;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.cart-content h2 {
+    margin-top: 0;
+    font-family: 'Fredoka One', cursive;
+    color: #f06292;
+}
+
+.cart-item {
+    margin-bottom: 15px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.cart-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* ---------- STICKY CART ---------- */
+#sticky-cart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff6f91;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 999;
+    transition: background-color 0.3s ease;
+    font-family: 'Fredoka One', cursive;
+}
+.cart-modal.show {
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#sticky-cart:hover {
+    background-color: #f06292;
+}
+
+/* ---------- FLOATING ICONS ---------- */
+.floating-icons {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-icons::before {
+    content: '⭐️ 💖 🌈 ✨ 💫';
+    position: absolute;
+    animation: floatUp 8s linear infinite;
+    font-size: 24px;
+    opacity: 0.5;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+}
+
+@keyframes floatUp {
+    0% {
+        top: 100%;
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        top: -10%;
+        opacity: 0;
+    }
+}
+.top-left-cart {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 1.4rem;
+    background: #ffd1dc;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+/* ---------- RESPONSIVENESS ---------- */
+@media screen and (max-width: 768px) {
+    .product {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .top-bar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
